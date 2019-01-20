@@ -6,11 +6,13 @@ const BASE_URL = 'http://localhost:3100/graphql';
 
 const query = `query allStudents {
     allStudents {
+    id
+    firstName
+     Donuts {
       id
-      firstName
-      lastName
-      active
+      name
     }
+  }
   }`;
 
 class App extends Component {
@@ -19,8 +21,9 @@ class App extends Component {
     this.state = { title: 'Students' };
   }
 
-  componentWillMount() {
-    request(BASE_URL, query).then(data => this.setState({data}));
+  componentWillMount = async () => {
+    const data = await request(BASE_URL, query);
+    this.setState({ data });
   }
 
   render() {

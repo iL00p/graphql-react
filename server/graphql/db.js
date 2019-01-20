@@ -7,5 +7,9 @@ module.exports = {
   students: [
     { id: 4, firstName: "John", lastName: "Doe", active: "true" },
     { id: 5, firstName: "Jane", lastName: "Smith", active: "false" }
+  ],
+  donuts : [
+    { id : 100, name : 'Glazed', student_id : 4 },
+    { id : 101, name : 'Choco', student_id : 4 },
   ]
 };
