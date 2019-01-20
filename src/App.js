@@ -2,18 +2,14 @@ import React, { Component } from 'react';
 
 import { request } from 'graphql-request'
 
-const BASE_URL = 'http://localhost:3100/graphql';
+import {
+  getStudentsQuery,
+  createStudentQuery,
+  updateStudentQuery,
+  removeStudentQuery
+} from './queries';
 
-const query = `query allStudents {
-    allStudents {
-    id
-    firstName
-     Donuts {
-      id
-      name
-    }
-  }
-  }`;
+const BASE_URL = 'http://localhost:3100/graphql';
 
 class App extends Component {
   constructor(props) {
@@ -21,9 +17,55 @@ class App extends Component {
     this.state = { title: 'Students' };
   }
 
-  componentWillMount = async () => {
-    const data = await request(BASE_URL, query);
+  componentWillMount() {
+    this.getStudents();
+  }
+
+  getStudents = async () => {
+    const data = await request(BASE_URL, getStudentsQuery);
     this.setState({ data });
+  }
+
+  addStudent = async () => {
+    const objToSend = { 
+      id: 666,
+      firstName: 'Arjun',
+      lastName: 'Sreedhar',
+      active: 'true'
+    }
+    try {
+      await request(BASE_URL, createStudentQuery, objToSend);
+      this.setState({ data : null }, this.getStudents);
+    } catch (e) {
+      console.log('Err::::', e)
+    }
+  }
+
+  updateStudent = async () => {
+    const objToSend = {
+      id: "4",
+      // firstName: 'Arjun',
+      // lastName: 'Sreedhar',
+      active: 'true'
+    }
+    try {
+      await request(BASE_URL, updateStudentQuery, objToSend);
+      this.setState({ data: null }, this.getStudents);
+    } catch (e) {
+      console.log('Err::::', e)
+    }
+  }
+
+  removeStudent = async () => {
+    const objToSend = {
+      id: 666,
+    }
+    try {
+      await request(BASE_URL, removeStudentQuery, objToSend);
+      this.setState({ data: null }, this.getStudents);
+    } catch (e) {
+      console.log('Err::::', e)
+    }
   }
 
   render() {
@@ -35,6 +77,7 @@ class App extends Component {
         <div style={{textAlign: 'left'}}>
           <pre>{JSON.stringify(this.state.data, null, 2)}</pre>
         </div>
+        <button onClick={this.removeStudent}>Remove Student</button>
       </div>
     );
   }
