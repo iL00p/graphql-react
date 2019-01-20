@@ -4,16 +4,23 @@ import { request } from 'graphql-request'
 
 const BASE_URL = 'http://localhost:3100/graphql';
 
+const fragment = `fragment course on Course {
+    id
+    name
+  }`
+
 const query = `query allStudents {
     allStudents {
     id
     firstName
-     Donuts {
-      id
-      name
+     Courses {
+      ...course
     }
+   }
   }
-  }`;
+  ${fragment}
+  `;
+
 
 class App extends Component {
   constructor(props) {
