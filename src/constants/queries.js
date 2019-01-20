@@ -1,4 +1,6 @@
-const getStudentsQuery = `
+import gql from "graphql-tag";
+
+const getStudentsQuery = gql`
   query allStudents {
     allStudents {
       id
@@ -9,7 +11,7 @@ const getStudentsQuery = `
   }
 `
 
-const createStudentQuery = `
+const createStudentQuery = gql`
   mutation createStudent($id: ID!, $firstName: String!, $lastName: String!,$active: String!) {
     createStudent(id: $id, firstName: $firstName, lastName: $lastName, active: $active) {
       id
@@ -20,7 +22,7 @@ const createStudentQuery = `
   }
 `;
 
-const updateStudentQuery = `
+const updateStudentQuery = gql`
   mutation updateStudent($id : ID!, $active: String!) {
       updateStudent(id: $id, active: $active) {
           id,
@@ -31,7 +33,7 @@ const updateStudentQuery = `
   }
 `;
 
-const removeStudentQuery = `
+const removeStudentQuery = gql`
   mutation removeStudent($id : ID!) {
       removeStudent(id : $id)
   }
